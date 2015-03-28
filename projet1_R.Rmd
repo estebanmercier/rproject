@@ -5,9 +5,6 @@ date: "Saturday, March 28, 2015"
 output: html_document
 ---
 
-
-toto
-
 #{r, echo=FALSE, cache=TRUE, message=FALSE}
 ```{r}
 #lire le fichier dans R
