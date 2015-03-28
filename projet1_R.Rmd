@@ -1,0 +1,29 @@
+---
+title: "Projet 1"
+author: "Esteban Mercier - Nam Son Nguyen"
+date: "Saturday, March 28, 2015"
+output: html_document
+---
+
+
+toto
+
+#{r, echo=FALSE, cache=TRUE, message=FALSE}
+```{r}
+#lire le fichier dans R
+data<-read.csv("bank-data.csv")
+#obtenir un résumé des données
+summary(data)
+# jeu des 10 premières lignes
+head(data,10)
+#pour le nombre de colonnes/lignes
+dim(data)
+# affiche la dispersion des données pour l'age
+table(cut(data$age, breaks=c(18,34,51,67), include.lowest=TRUE))
+# affiche la dispersion des données pour le revenu
+table(cut(data$income, breaks=c(0,24386,43758,63230), include.lowest=TRUE))
+
+# sd(x, na.rm = FALSE)
+# s<- sd(obs2[, 1]) # écart type 
+
+```
