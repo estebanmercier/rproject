@@ -23,4 +23,19 @@ table(cut(data$income, breaks=c(0,24386,43758,63230), include.lowest=TRUE))
 # sd(x, na.rm = FALSE)
 # s<- sd(obs2[, 1]) # écart type 
 
+#
+datasummary<-summary(data)
+
+#variance et ecart type
+#age, income, children
+head(data)
+summary(data)
+var(data$age)
+sd(data$age)
+var(data$income)
+sd(data$income)
+var(data$children)
+sd(data$children)
+
+
 ```
