@@ -49,6 +49,24 @@ str(data)
 # Calcul automatiquement : effectifs pour factor/ordered, moyennes et quartile pour numeric
 summary(data)
 
+## MANUELLEMENT - FONCTIONS
+
+# Effectif
+# > table(data$married)
+
+# Centralité MODE
+# > sort(table(data$region))
+# Centralité MEDIANE
+# > median(data$age, na.rm = TRUE)
+# Centralité MOYENNE
+# > mean(data$age, na.Rm = TRUE)
+
+# Dispersion Quartiles
+# > mean(data$age, na.rm = TRUE)
+# Dispersion ECART-TYPE
+# > sd(data$age, na.rm = TRUE)
+# Dispersion VARIANCE
+# > var(data$age, na.rm = TRUE)
 
 
 
