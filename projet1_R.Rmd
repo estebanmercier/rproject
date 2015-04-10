@@ -1,127 +1,181 @@
 ---
-title: "Projet 1"
-author: "Esteban Mercier - Nam Son Nguyen"
-date: "Saturday, March 28, 2015"
+title: "Projet M2CI_5"
+author: "Esteban MERCIER - Nam Son NGUYEN - William CONTI"
 output: html_document
 ---
 
-#{r, echo=FALSE, cache=TRUE}
+# Sujet Langage R - Règles d'association
+## Contexte:
+
+```
+A partir des données bancaires, l'idée est de construire une ensemble de règles à l'aide de l'algorithme APRIORI et une typologie des individus par une procédure de classification automatique
+
+```
+
+## Question 1
+
+```
+Résumer la structure de données à l'aide d'un tableau numérique.
+Utiliser moyenne/ecart-type et étendue pour les données nuémriques.
+Utiliser effectif/proportion pour les données catégorielles.
+```
+
+### Lecture & Stockage
+
+
+```
+Lecture des données du fichier bank-data.csv dans R
+> read.csv("bank-data.csv")
+```
+
+```
+Lecture et stockage des données du fichier bank-data.csv dans R
+> data<-read.csv("bank-data.csv")
+```
+
+```
+Lecture et stockage des données du fichier bank-data.csv dans R - en considérant les données manquantes
+```
 ```{r}
-## Début du projet
-## MERCIER Esteban
-## NGUYEN Nam Son
-## CONTI William
-
-###
-#   QUESTION 1
-#   Résumer la structure de données à l'aide d'un tableau numérique
-#   Utiliser moyenne/ecart-type et étendue pour les données nuémriques
-#   Utiliser effectif/proportion pour les données catégorielles
-###
-
-## Lecture & Stockage
-
-# Lecture des données du fichier bank-data.csv dans R
-# > read.csv("bank-data.csv")
-# Lecture et stockage des données du fichier bank-data.csv dans R
-# > data<-read.csv("bank-data.csv")
-# Lecture et stockage des données du fichier bank-data.csv dans R - en considérant les données manquantes
 data<-read.csv("bank-data.csv", na.string="")
-# Vérification des données qui sont en mémoire dans data - TOUT - (long tableau dans notre cas)
-# > data
-# Ici data est un data.frame : un tableau contenant toutes nos données.
-# Chaque colonne correspond à une variable.
-# Chaque ligne correspond à un individu.
+```
 
-## Récupération des données stockées
+```
+Vérification des données qui sont en mémoire dans data - TOUT - (long tableau dans notre cas)
+> data
+```
 
-# Récupération d'une colonne selon une variable : ex : variable "région"
-# > data$region
-# Récupération d'une ligne selon son positionnement dans le tableau : la 3ème ligne
-# > data[,3]
+```
+Ici data est un data.frame : un tableau contenant toutes nos données.
+Chaque colonne correspond à une variable.
+Chaque ligne correspond à un individu.
+```
 
-# Obtenir un jeu des 10 premières lignes du tableau
+### Récupération des données stockées
+
+```
+Récupération d'une colonne selon une variable : ex : variable "région"
+> data$region
+```
+
+```
+Récupération d'une ligne selon son positionnement dans le tableau : la 3ème ligne
+> data[,3]
+```
+
+```
+Obtenir un jeu des 10 premières lignes du tableau
+```
+```{r}
 head(data,10)
-# Pour obtenir le nombre de colonnes/lignes du tableau
+```
+
+```
+Pour obtenir le nombre de lignes / colonnes du tableau
+```
+```{r}
 dim(data)
+```
 
-## Analyse des variables
+### Analyse des variables
 
-# Aperçu des types de variables, de leur modalités et des premiers échantillions.
+```
+Aperçu des types de variables, de leur modalités et des premiers échantillions.
+```
+```{r}
 str(data)
+```
 
-# Si des variables ne sont pas du même type on peut utiliser quelques fonctions pour les transformer selon le besoin
-# > data$colonne <- as.factor(data$colonne)
-# > data$colonne <- as.numeric(data$colonne)
+```
+Si des variables ne sont pas du même type on peut utiliser quelques fonctions pour les transformer selon le besoin
+> data$colonne <- as.factor(data$colonne)
+> data$colonne <- as.numeric(data$colonne)
+```
 
-# Un résumé des données
-# Calcul automatiquement : effectifs pour factor/ordered, moyennes et quartile pour numeric
+### Un résumé des données
+
+```
+Calcul automatiquement : effectifs pour factor/ordered, moyennes et quartile pour numeric
+```
+```{r}
 summary(data)
+```
 
-## MANUELLEMENT - FONCTIONS
+```
+Manuellement - Fonctions
 
-# Effectif
-# > table(data$married)
+Effectif
+> table(data$married)
 
-# Centralité MODE
-# > sort(table(data$region))
-# Centralité MEDIANE
-# > median(data$age, na.rm = TRUE)
-# Centralité MOYENNE
-# > mean(data$age, na.Rm = TRUE)
+Centralité MODE
+> sort(table(data$region))
 
-# Dispersion QUARTILES
-# > mean(data$age, na.rm = TRUE)
-# Dispersion ECART-TYPE
-# > sd(data$age, na.rm = TRUE)
-# Dispersion VARIANCE
-# > var(data$age, na.rm = TRUE)
+Centralité MEDIANE
+> median(data$age, na.rm = TRUE)
 
-# On constate qu'il nous manque les ecart-types/variances pour les colonnes AGE, INCOME et CHILDREN
-# AGE
+Centralité MOYENNE
+> mean(data$age, na.Rm = TRUE)
+
+Dispersion QUARTILES
+> mean(data$age, na.rm = TRUE)
+
+Dispersion ECART-TYPE
+> sd(data$age, na.rm = TRUE)
+
+Dispersion VARIANCE
+> var(data$age, na.rm = TRUE)
+```
+
+```
+On constate qu'il nous manque les ecart-types/variances pour les colonnes AGE, INCOME et CHILDREN
+```
+```{r}
 eta <- var(data$age, na.rm = TRUE)
 va <- sd(data$age, na.rm = TRUE)
-# INCOME
+
 eti <- var(data$income, na.rm = TRUE)
 vi <- sd(data$income, na.rm = TRUE)
-# CHILDREN
+
 etc <- var(data$children, na.rm = TRUE)
 vc <- sd(data$children, na.rm = TRUE)
+```
 
-# On met les valeurs dans une data.frame
+```
+On met les valeurs dans une data.frame
+```
+```{r}
 summaryplus <- data.frame(ECARTTYPE=c(round(eta,2), round(eti,2), round(etc,2)), VARIANCE=c(round(va,2), round(vi,2), round(vc,2)), row.names=c("AGE","INCOME","CHILDREN"))
-# On affiche summaryplus
+# round(vi,2) pour arrondir à 2 chiffres après la virgule
+```
+
+```
+On affiche summaryplus
+```
+```{r}
 summaryplus
+```
 
-## Plus : Utilisation de graphe peut etre intéressant pour avoir un aperçu global
-barplot(table(data$age))
+```
+Plus : Utilisation de graphe peut etre intéressant pour avoir un aperçu global
+> barplot(table(data$age))
+```
 
-###
-#   QUESTION 2
-#   Recoder les variables AGE et INCOME en 3 classes d'intervalles
-#   {0-34, 35-51, 52-67} et {0-24386, 24387-23758, 23759-63130}
-#   S'assurer que les variables discrètes sont bien traitées telles quelles.
-###
+##   QUESTION 2
 
-# affiche la dispersion des données pour l'age
-table(cut(data$age, breaks=c(18,34,51,67), include.lowest=TRUE))
-# affiche la dispersion des données pour le revenu
-table(cut(data$income, breaks=c(0,24386,43758,63230), include.lowest=TRUE))
+```
+Recoder les variables AGE et INCOME en 3 classes d'intervalles:
+{0-34, 35-51, 52-67} et {0-24386, 24387-23758, 23759-63130}
+S'assurer que les variables discrètes sont bien traitées telles quelles.
+```
 
-###
-#   QUESTION 3
-#   Fournir une liste de 10 règles basées sur INCOME
-#   en considérant un suport minimum de 0.1 et une valeur de lift =>1.5
-###
+##   QUESTION 3
 
+```
+Fournir une liste de 10 règles basées sur INCOME en considérant un suport minimum de 0.1 et une valeur de lift =>1.5
+```
 
+##   QUESTION 4
 
-###
-#   QUESTION 4
-#   Utiliser une procédure de classification automatique
-#   couplée à une analyse en composante principale pour construire une typologie des individus.
-###
-
-
-
+```
+Utiliser une procédure de classification automatique couplée à une analyse en composante principale pour construire une typologie des individus.
 ```
