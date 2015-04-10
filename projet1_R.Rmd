@@ -8,6 +8,9 @@ output: html_document
 #{r, echo=FALSE, cache=TRUE}
 ```{r}
 ## Début du projet
+## MERCIER Esteban
+## NGUYEN Nam Son
+## CONTI William
 
 ## Lecture & Stockage
 
