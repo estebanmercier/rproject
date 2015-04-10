@@ -30,6 +30,7 @@ datasummary<-summary(data)
 #age, income, children
 head(data)
 summary(data)
+
 var(data$age)
 sd(data$age)
 var(data$income)
@@ -37,5 +38,6 @@ sd(data$income)
 var(data$children)
 sd(data$children)
 
+# mise en forme
 
 ```
