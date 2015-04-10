@@ -4,7 +4,7 @@ author: "Esteban MERCIER - Nam Son NGUYEN - William CONTI"
 output: html_document
 ---
 
-# Sujet Langage R - Règles d'association
+# Sujet Langage R - Regles d'association
 ## Contexte:
 
 ```
@@ -51,7 +51,7 @@ Chaque colonne correspond à une variable.
 Chaque ligne correspond à un individu.
 ```
 
-### Récupération des données stockées
+### Recupération des donnees stockees
 
 ```
 Récupération d'une colonne selon une variable : ex : variable "région"
@@ -92,7 +92,7 @@ Si des variables ne sont pas du même type on peut utiliser quelques fonctions p
 > data$colonne <- as.numeric(data$colonne)
 ```
 
-### Un résumé des données
+### Un resume des donnees
 
 ```
 Calcul automatiquement : effectifs pour factor/ordered, moyennes et quartile pour numeric
@@ -160,20 +160,6 @@ Plus : Utilisation de graphe peut etre intéressant pour avoir un aperçu global
 > barplot(table(data$age))
 ```
 
-##   QUESTION 2
-
-```
-Recoder les variables AGE et INCOME en 3 classes d'intervalles:
-{0-34, 35-51, 52-67} et {0-24386, 24387-23758, 23759-63130}
-S'assurer que les variables discrètes sont bien traitées telles quelles.
-```
-
-##   QUESTION 3
-
-```
-Fournir une liste de 10 règles basées sur INCOME en considérant un suport minimum de 0.1 et une valeur de lift =>1.5
-```
-
 ##   QUESTION 4
 
 ```
@@ -195,7 +181,7 @@ Data <- as.data.frame(Data)
 ```
 
 ```
-Test 1
+Option 1
 ```
 ```{r}
 res.pca <- PCA(Data)
@@ -204,7 +190,7 @@ round(res.pca$eig[1:4,],2)
 ```
 
 ```
-Test 2
+Option 2
 On utilise princomp pour effectuer une analyse en composante principale sur nos données.
 On utilise la corrélation de matrice plutot que la covariance de matrice par choix
 Cela genere des resultats pour toutes les données que l'on store dans test2
@@ -219,7 +205,7 @@ plot(test2, type="lines")
 ```
 
 ```
-Test 3
+Option 3
 k-means
 ```
 ```{r}
@@ -234,7 +220,7 @@ with(Data, table(cluster, region))
 ```
 
 ```
-Test 4
+Option 4
 ```
 ```{r}
 test4 <- princomp(Data, cor=TRUE, scores=TRUE)
@@ -243,7 +229,7 @@ plot(test4)
 ```
 
 ```
-Test 5
+Option 5
 PCA
 Clustering, auto nb of clusters
 Construct a hierarchical tree from a partition (with 10 clusters)
@@ -264,7 +250,13 @@ output: html_document
 
 *A partir des données bancaire, l'idée est de construire un ensemble de règles à l'aide de l'algorithme APRIORI et une typologie des individus par une procédure de classification automatique*
 
+##   QUESTION 2
 
+```
+Recoder les variables AGE et INCOME en 3 classes d'intervalles:
+{0-34, 35-51, 52-67} et {0-24386, 24387-23758, 23759-63130}
+S'assurer que les variables discrètes sont bien traitées telles quelles.
+```
 
 ```{r, echo=FALSE, cache=TRUE, message=FALSE}
 setwd("~/Documents/ESME/Master_2/Semestre2/R/R/Tp_R_M2CI_5")
@@ -355,7 +347,11 @@ Nous avons donc dans l'intervalle:
 summary(data)
 ```
 
+##   QUESTION 3
 
+```
+Fournir une liste de 10 règles basées sur INCOME en considérant un suport minimum de 0.1 et une valeur de lift =>1.5
+```
 
 **Mining Association Rules and Frequent Itemsets avec "arules"**
 
