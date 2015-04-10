@@ -5,16 +5,50 @@ date: "Saturday, March 28, 2015"
 output: html_document
 ---
 
-#{r, echo=FALSE, cache=TRUE, message=FALSE}
+#{r, echo=FALSE, cache=TRUE}
 ```{r}
-#lire le fichier dans R
-data<-read.csv("bank-data.csv")
-#obtenir un résumé des données
-summary(data)
-# jeu des 10 premières lignes
+## Début du projet
+
+## Lecture & Stockage
+
+# Lecture des données du fichier bank-data.csv dans R
+read.csv("bank-data.csv")
+# Lecture et stockage des données du fichier bank-data.csv dans R
+# > data<-read.csv("bank-data.csv")
+# Lecture et stockage des données du fichier bank-data.csv dans R - en considérant les données manquantes
+data<-read.csv("bank-data.csv", na.string="")
+# Vérification des données qui sont en mémoire dans data - TOUT - (long tableau dans notre cas)
+# > data
+# Ici data est un data.frame : un tableau contenant toutes nos données. Chaque colonne correspond à une variable et chaque ligne un individu.
+
+## Récupération des données stockées
+
+# Récupération d'une colonne selon une variable : ex : variable "région"
+# > data$region
+# Récupération d'une ligne selon son positionnement dans le tableau : la 3ème ligne
+# > data[,3]
+
+# Obtenir un jeu des 10 premières lignes du tableau
 head(data,10)
-#pour le nombre de colonnes/lignes
+# Pour obtenir le nombre de colonnes/lignes du tableau
 dim(data)
+
+## Analyse des variables
+
+# Aperçu des types de variables, de leur modalités et des premiers échantillions.
+str(data)
+
+# Si des variables ne sont pas du même type on peut utiliser quelques fonctions pour les transformer selon le besoin
+# > data$colonne <- as.factor(data$colonne)
+# > data$colonne <- as.numeric(data$colonne)
+
+# Un résumé des données
+# Calcul automatiquement : effectifs pour factor/ordered, moyennes et quartile pour numeric
+summary(data)
+
+
+
+
 # affiche la dispersion des données pour l'age
 table(cut(data$age, breaks=c(18,34,51,67), include.lowest=TRUE))
 # affiche la dispersion des données pour le revenu
