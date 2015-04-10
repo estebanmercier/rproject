@@ -118,7 +118,7 @@ table(cut(data$income, breaks=c(0,24386,43758,63230), include.lowest=TRUE))
 
 ###
 #   QUESTION 4
-#   Utiliser une procédure de classification automatiue
+#   Utiliser une procédure de classification automatique
 #   couplée à une analyse en composante principale pour construire une typologie des individus.
 ###
 
