@@ -179,3 +179,76 @@ Fournir une liste de 10 règles basées sur INCOME en considérant un suport min
 ```
 Utiliser une procédure de classification automatique couplée à une analyse en composante principale pour construire une typologie des individus.
 ```
+
+```
+On utilise pour effectuer l'analyse en composante principale la librairie FactoMineR
+> install.packages("FactoMineR")
+> library(FactoMineR)
+
+Mais il nous faut :
+a data frame with n rows (individuals) and p columns (numeric variables)
+```
+```{r}
+Data <- lapply(data, FUN = as.numeric)
+Data <- as.data.frame(Data)
+```
+
+```
+Test 1
+```
+```{r}
+res.pca <- PCA(Data)
+res.pca
+round(res.pca$eig[1:4,],2)
+```
+
+```
+Test 2
+On utilise princomp pour effectuer une analyse en composante principale sur nos données.
+On utilise la corrélation de matrice plutot que la covariance de matrice par choix
+Cela genere des resultats pour toutes les données que l'on store dans test2
+On peut examiner nos données par la fonction summary
+On observe que nos données montre une cumulation au niveau des proportions de variances jusqu'à 1
+On peut utiliser la fonction plot pour avoir ces resultats sous une autre forme
+```
+```{r}
+test2 <- princomp(Data[,1:12], cor=TRUE, scores=TRUE)
+summary(test2)
+plot(test2, type="lines")
+```
+
+```
+Test 3
+k-means
+```
+```{r}
+set.seed(77)
+test3 <- kmeans(Data[,1:12],3)
+Data$cluster <- as.factor(test3$cluster)
+
+plot3d(pc$scores[,1:12], col=Data$cluster, main="k-means clusters")
+plot3d(pc$scores[,1:12], col=Data$region, main="region actuels")
+
+with(Data, table(cluster, region))
+```
+
+```
+Test 4
+```
+```{r}
+test4 <- princomp(Data, cor=TRUE, scores=TRUE)
+summary(test4)
+plot(test4)
+```
+
+```
+Test 5
+PCA
+Clustering, auto nb of clusters
+Construct a hierarchical tree from a partition (with 10 clusters)
+```
+```{r}
+test5a <- PCA(Data[,1:12], graph=FALSE)
+test5b <- HCPC(Data, nb.clust=-1)
+test5c <- HCPC(Data[,1:12], kk=10, nb.clust=-1)
+```
